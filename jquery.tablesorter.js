@@ -133,7 +133,8 @@
                 decimal: '/\.|\,/g',
                 onRenderHeader: null,
                 selectorHeaders: 'thead th',
-                debug: false
+                debug: false,
+                thousandsSeparator: ','
             };
 
             /* debuging utils */
@@ -950,8 +951,9 @@
         id: "currency",
         is: function (s) {
             return /^[£$€?.]/.test(s);
-        }, format: function (s) {
-            return $.tablesorter.formatFloat(s.replace(new RegExp(/[£$€]/g), ""));
+        }, format: function (s, table) {
+            var regex = new RegExp("[£$€"+table.config.thousandsSeparator+"]", "g");
+            return $.tablesorter.formatFloat(s.replace(regex, ""));
         }, type: "numeric"
     });
 
